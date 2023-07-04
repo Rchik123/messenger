@@ -1,7 +1,8 @@
-package ge.mjavarchik.messenger
+package ge.mjavarchik.messenger.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ge.mjavarchik.messenger.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
