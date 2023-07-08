@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="avatar_width">200dp</dimen>
+    <dimen name="avatar_height">200dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="avatar_margin">20dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="itemDivider10dp">10dp</dimen>
+    <dimen name="oneDp">1dp</dimen>
+    <dimen name="corner_radius">20dp</dimen>
+    <dimen name="editTextHeight">40dp</dimen>
+    <dimen name="editTextWidth">300dp</dimen>
+    <dimen name="twoDp">2dp</dimen>
+    <dimen name="font_24">24sp</dimen>
+    <dimen name="font_16">16sp</dimen>
+    <dimen name="fourDp">4dp</dimen>
+    <dimen name="tenDp">10dp</dimen>
+</resources>
