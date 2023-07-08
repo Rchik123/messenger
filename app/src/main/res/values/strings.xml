@@ -9,4 +9,6 @@
     <string name="not_registered">Not registered?</string>
     <string name="main_page">Main Page</string>
     <string name="profile">Profile</string>
+    <string name="update">Update</string>
+    <string name="sign_out">SIGN OUT</string>
 </resources>
