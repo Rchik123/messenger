@@ -7,4 +7,6 @@
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in">SIGN IN</string>
     <string name="not_registered">Not registered?</string>
+    <string name="main_page">Main Page</string>
+    <string name="profile">Profile</string>
 </resources>
