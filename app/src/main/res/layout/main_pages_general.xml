@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@android:color/transparent"
-            app:contentInsertStart="0dp"
+            app:backgroundTint="#00000000"
+            app:contentInsetStart="0dp"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
@@ -36,8 +37,6 @@
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-
                 android:background="@android:color/transparent"
                 app:labelVisibilityMode="unlabeled"
                 app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
