@@ -1,11 +1,9 @@
-package ge.mjavarchik.messenger.view
+package ge.mjavarchik.messenger.view.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import ge.mjavarchik.messenger.R
-import ge.mjavarchik.messenger.databinding.ActivityMainBinding
 import ge.mjavarchik.messenger.databinding.LogInPageBinding
 
 class MainActivity : AppCompatActivity() {
