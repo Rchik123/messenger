@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import ge.mjavarchik.messenger.databinding.LogInPageBinding
 
-class MainActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
 
     private lateinit var binding: LogInPageBinding
 
