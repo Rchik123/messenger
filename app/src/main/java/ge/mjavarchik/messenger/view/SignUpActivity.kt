@@ -7,16 +7,27 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import ge.mjavarchik.messenger.databinding.ActivityMainBinding
 import ge.mjavarchik.messenger.databinding.SignUpLayoutBinding
+import ge.mjavarchik.messenger.viewmodel.SignUpViewModel
+import androidx.activity.viewModels
+import ge.mjavarchik.messenger.model.api.User
 
 class SignUpActivity : AppCompatActivity() {
+
+    private val viewModel: SignUpViewModel by viewModels {
+        SignUpViewModel.getViewModelFactory()
+    }
     private lateinit var binding: SignUpLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignUpLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.signedUp.observe(this) {
+            Toast.makeText(this, "SIGNED UP = true !!!", Toast.LENGTH_SHORT).show()
+        }
+
         val signUpButton: Button = binding.signUpButton
         signUpButton.setOnClickListener {
             val nickSignUp: EditText = binding.nickSignUp
@@ -30,7 +41,8 @@ class SignUpActivity : AppCompatActivity() {
             if (nickText.isEmpty() || passwordText.isEmpty() || professionText.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                // to add input in firebase ra
+                val user = User(nickText, professionText, passwordText)
+                registerUser(user)
             }
         }
         val editText: EditText = binding.professionSignUp
@@ -49,5 +61,7 @@ class SignUpActivity : AppCompatActivity() {
         })
     }
 
-
+    private fun registerUser(user: User) {
+        viewModel.registerUser(user)
+    }
 }
