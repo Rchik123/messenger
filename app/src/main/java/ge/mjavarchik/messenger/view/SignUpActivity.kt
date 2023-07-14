@@ -3,7 +3,6 @@ package ge.mjavarchik.messenger.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,12 +23,28 @@ class SignUpActivity : AppCompatActivity() {
         binding = SignUpLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.signedUp.observe(this) {
-            Toast.makeText(this, "SIGNED UP = true !!!", Toast.LENGTH_SHORT).show()
-        }
+        setUpSignedUpObserver()
+        setUpSignUpBtnListener()
+        setUpProfessionEtListener()
+    }
 
-        val signUpButton: Button = binding.signUpButton
-        signUpButton.setOnClickListener {
+    private fun setUpSignedUpObserver() {
+        viewModel.signedUp.observe(this) { signedUp ->
+            if (signedUp) {
+                Toast.makeText(this, "Sign up successful", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Username: ${viewModel.getEnteredUsername()} already exists",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun setUpSignUpBtnListener() {
+        binding.signUpButton.setOnClickListener {
             val nickSignUp: EditText = binding.nickSignUp
             val passwordSignUp: EditText = binding.passwordSignUp
             val professionSignUp: EditText = binding.professionSignUp
@@ -42,26 +57,28 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
                 val user = User(nickText, professionText, passwordText)
-                registerUser(user)
+                viewModel.signUpUser(user)
             }
         }
-        val editText: EditText = binding.professionSignUp
+    }
+
+    private fun setUpProfessionEtListener() {
         val maxLength = 100
 
-        editText.addTextChangedListener(object : TextWatcher {
+        binding.professionSignUp.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null && s.length >= maxLength) {
-                    Toast.makeText(this@SignUpActivity, "Maximum number of symbols should be less than $maxLength", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Maximum number of symbols should be less than $maxLength",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
-    }
-
-    private fun registerUser(user: User) {
-        viewModel.registerUser(user)
     }
 }

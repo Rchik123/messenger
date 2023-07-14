@@ -1,6 +1,5 @@
 package ge.mjavarchik.messenger.model.repository
 
-import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import ge.mjavarchik.messenger.model.data.UserEntity
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +12,7 @@ class FirebaseRepository {
 
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
-            if (getUser(userEntity.nickname) == null) return@withContext false
-            Log.d("repoo", "GAMARJOBA")
+            if (getUser(userEntity.nickname) != null) return@withContext false
             val userReference = database.reference.child("users").child(userEntity.nickname)
             userReference.setValue(
                 mapOf("profession" to userEntity.profession, "hashedPassword" to userEntity.hashedPassword)

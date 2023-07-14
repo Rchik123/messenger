@@ -1,6 +1,5 @@
 package ge.mjavarchik.messenger.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,23 +13,21 @@ import org.mindrot.jbcrypt.BCrypt
 
 class SignUpViewModel(private val repository: FirebaseRepository) : ViewModel() {
 
+    private var enteredUsername: String = ""
+
     private var _signedUp = MutableLiveData<Boolean>()
     val signedUp: LiveData<Boolean> get() = _signedUp
 
-    init {
-        viewModelScope.launch {
-            _signedUp.value = false
-        }
-    }
-
-    fun registerUser(user: User) {
+    fun signUpUser(user: User) {
         viewModelScope.launch {
             val hashedPassword = BCrypt.hashpw(user.password, BCrypt.gensalt())
             val userEntity = UserEntity(user.nickname, user.profession, hashedPassword)
-            Log.d("asd123", userEntity.toString())
-            if (repository.addUser(userEntity)) _signedUp.postValue(true)
+            enteredUsername = userEntity.nickname
+            _signedUp.postValue(repository.addUser(userEntity))
         }
     }
+
+    fun getEnteredUsername(): String = enteredUsername
 
     companion object {
         fun getViewModelFactory(): SignUpViewModelFactory {

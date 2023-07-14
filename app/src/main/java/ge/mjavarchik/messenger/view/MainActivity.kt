@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 
 import ge.mjavarchik.messenger.databinding.LogInPageBinding
 
@@ -20,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun signUP(view: View) {
-        Firebase.analytics.logEvent("signupclicked", null)
         startActivity(Intent(this, SignUpActivity::class.java))
     }
 }
