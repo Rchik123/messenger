@@ -1,4 +1,4 @@
-package ge.mjavarchik.messenger.view
+package ge.mjavarchik.messenger.view.activity
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import ge.mjavarchik.messenger.databinding.ActivityMainBinding
 import ge.mjavarchik.messenger.databinding.SignUpLayoutBinding
 
 class SignUpActivity : AppCompatActivity() {
