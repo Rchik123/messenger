@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -14,7 +15,10 @@
         android:theme="@style/Theme.Messenger"
         tools:targetApi="31">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.ProfilePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +27,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.SignUpActivity"
-            android:exported="false"/>
-
+            android:name=".view.activity.SignUpActivity"
+            android:exported="false" />
     </application>
+
 </manifest>

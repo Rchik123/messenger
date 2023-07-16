@@ -1,4 +1,4 @@
-package ge.mjavarchik.messenger.view
+package ge.mjavarchik.messenger.view.activity
 
 import android.os.Bundle
 import android.text.Editable
