@@ -13,5 +13,11 @@ class ProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfilePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val username = intent.getStringExtra("username")
+        val profession = intent.getStringExtra("profession")
+
+        // Display the username and email in the UI
+        binding.etUsername.setText(username)
+        binding.etProfession.setText(profession)
     }
 }
