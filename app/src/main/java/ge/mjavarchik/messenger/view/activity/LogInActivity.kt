@@ -8,10 +8,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import ge.mjavarchik.messenger.databinding.LogInPageBinding
-import ge.mjavarchik.messenger.viewmodel.SignInViewModel
+import ge.mjavarchik.messenger.viewmodel.LogInViewModel
+
 class LogInActivity : AppCompatActivity() {
-    private val viewModel: SignInViewModel by viewModels {
-        SignInViewModel.getViewModelFactory()
+
+    private val viewModel: LogInViewModel by viewModels {
+        LogInViewModel.getViewModelFactory()
     }
     private lateinit var binding: LogInPageBinding
 
@@ -19,6 +21,7 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = LogInPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setUpSignedInObserver()
         setUpSignInBtnListener()
     }
