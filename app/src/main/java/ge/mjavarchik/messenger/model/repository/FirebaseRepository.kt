@@ -12,27 +12,32 @@ class FirebaseRepository {
 
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
-            if (getUser(userEntity.nickname) != null) return@withContext false
+            if (getUserByUsername(userEntity.nickname) != null) return@withContext false
             val userReference = database.reference.child("users").child(userEntity.nickname)
             userReference.setValue(
-                mapOf("profession" to userEntity.profession, "hashedPassword" to userEntity.hashedPassword)
+                mapOf(
+                    "nickname" to userEntity.nickname,
+                    "profession" to userEntity.profession,
+                    "hashedPassword" to userEntity.hashedPassword
+                )
             )
             true
         }
     }
 
-    suspend fun getUser(nickname: String): UserEntity? {
+    suspend fun getUserByUsername(username: String): UserEntity? {
         return withContext(Dispatchers.IO) {
-            val userReference = database.reference.child("users").child(nickname)
+            val userReference = database.reference.child("users").child(username)
             val userData = userReference.get().await()
 
             if (userData.exists()) {
                 val userInformation = userData.value as Map<*, *>
 
+                val nickname = userInformation["nickname"] as String
                 val profession = userInformation["profession"] as String
                 val hashedPassword = userInformation["hashedPassword"] as String
 
-                UserEntity(nickname, profession, hashedPassword)
+                UserEntity(username, nickname, profession, hashedPassword)
             } else {
                 null
             }

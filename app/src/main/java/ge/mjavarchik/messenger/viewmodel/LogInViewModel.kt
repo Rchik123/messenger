@@ -11,12 +11,13 @@ class LogInViewModel(private val repository: FirebaseRepository): ViewModel() {
     val signedIn: LiveData<Boolean> get() = _signedIn
     private var accountUsername: String = "No username"
     private var accountProfession: String = "No profession"
-    fun signInUser(nickname: String, password: String){
+
+    fun signInUser(username: String, password: String){
         viewModelScope.launch {
-            val userEntity = repository.getUser(nickname)
+            val userEntity = repository.getUserByUsername(username)
             userEntity?.let {
                 val isPasswordCorrect = BCrypt.checkpw(password, it.hashedPassword)
-                accountUsername = userEntity.nickname
+                accountUsername = userEntity.username
                 accountProfession = userEntity.profession
                 _signedIn.postValue(isPasswordCorrect)
             } ?: run {

@@ -56,7 +56,7 @@ class SignUpActivity : AppCompatActivity() {
             if (nickText.isEmpty() || passwordText.isEmpty() || professionText.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                val user = User(nickText, professionText, passwordText)
+                val user = User(nickText, nickText, professionText, passwordText)
                 viewModel.signUpUser(user)
             }
         }
