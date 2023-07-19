@@ -1,4 +1,10 @@
 package ge.mjavarchik.messenger.model.api
 
-class ChatListItem {
-}
+import java.util.*
+
+
+data class ChatListItem(
+    var chatId: String? = null,
+    var date: Date? = null,
+    var friendsAvatar: String? = null,
+    )
