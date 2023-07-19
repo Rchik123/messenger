@@ -12,7 +12,7 @@ class FirebaseRepository {
 
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
-            if (getUserByUsername(userEntity.nickname) != null) return@withContext false
+            if (getUserByUsername(userEntity.username) != null) return@withContext false
             val userReference = database.reference.child("users").child(userEntity.nickname)
             userReference.setValue(
                 mapOf(
@@ -40,6 +40,22 @@ class FirebaseRepository {
                 UserEntity(username, nickname, profession, hashedPassword)
             } else {
                 null
+            }
+        }
+    }
+
+    suspend fun updateUser(username: String, newNickname: String, newProfession: String) {
+        return withContext(Dispatchers.IO) {
+            val user = getUserByUsername(username)
+            user?.let {
+                val userReference = database.reference.child("users").child(it.username)
+                userReference.setValue(
+                    mapOf(
+                        "nickname" to newNickname,
+                        "profession" to newProfession,
+                        "hashedPassword" to it.hashedPassword
+                    )
+                )
             }
         }
     }
