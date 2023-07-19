@@ -46,10 +46,7 @@ class LogInActivity : AppCompatActivity() {
         viewModel.signedIn.observe(this) { signedIn ->
             if (signedIn) {
                 Toast.makeText(this, "Log in successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ProfilePageActivity::class.java)
-                intent.putExtra("username", viewModel.getUserName())
-                intent.putExtra("profession", viewModel.getProfession())
-                startActivity(intent)
+                startActivity(Intent(this, LoggedInActivity::class.java))
                 finish()
             } else {
                 Toast.makeText(
