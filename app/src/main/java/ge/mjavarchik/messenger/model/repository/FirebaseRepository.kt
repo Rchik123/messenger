@@ -13,7 +13,7 @@ class FirebaseRepository {
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
             if (getUserByUsername(userEntity.username) != null) return@withContext false
-            val userReference = database.reference.child("users").child(userEntity.nickname)
+            val userReference = database.reference.child("users").child(userEntity.username)
             userReference.setValue(
                 mapOf(
                     "nickname" to userEntity.nickname,
