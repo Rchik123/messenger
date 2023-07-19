@@ -17,11 +17,11 @@ class LoggedInViewModel(
     private var _loggedInUser = MutableLiveData<User>()
     val loggedInUser: LiveData<User> get() = _loggedInUser
 
-    init {
-        viewModelScope.launch {
-            _loggedInUser.postValue(getLoggedInUser())
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            _loggedInUser.postValue(getLoggedInUser()) // TODO: think of solution
+//        }
+//    }
 
     fun updateUserInformation(newNickname: String, newProfession: String) {
         viewModelScope.launch {
@@ -29,6 +29,10 @@ class LoggedInViewModel(
                 firebaseRepository.updateUser(it.username, newNickname, newProfession)
             }
         }
+    }
+
+    fun signOut() {
+        preferenceRepository.clearLoggedInUsername()
     }
 
     private suspend fun getLoggedInUser(): User? {

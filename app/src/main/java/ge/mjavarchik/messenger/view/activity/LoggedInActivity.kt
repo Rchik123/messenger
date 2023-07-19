@@ -21,6 +21,14 @@ class LoggedInActivity : AppCompatActivity() {
 
         setUpLoggedInUserObserver()
         setUpUpdateBtnListener()
+        setUpSignOutBtnListener()
+    }
+
+    private fun setUpSignOutBtnListener() {
+        binding.btnSignOut.setOnClickListener {
+            viewModel.signOut()
+            finish()
+        }
     }
 
     private fun setUpLoggedInUserObserver() {

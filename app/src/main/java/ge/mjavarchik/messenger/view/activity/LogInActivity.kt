@@ -13,7 +13,7 @@ import ge.mjavarchik.messenger.viewmodel.LogInViewModel
 class LogInActivity : AppCompatActivity() {
 
     private val viewModel: LogInViewModel by viewModels {
-        LogInViewModel.getViewModelFactory()
+        LogInViewModel.getViewModelFactory(applicationContext)
     }
     private lateinit var binding: LogInPageBinding
 
