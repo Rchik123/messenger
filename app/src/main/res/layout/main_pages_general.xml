@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Main content layout -->
-    <FrameLayout
-        android:id="@+id/mainContentLayout"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/coordinator"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:background="@android:color/transparent" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -29,15 +32,16 @@
             app:backgroundTint="#00000000"
             app:contentInsetStart="0dp"
             app:fabAlignmentMode="center"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="10dp"
+            app:fabCradleMargin="15dp"
+            app:fabCradleRoundedCornerRadius="12dp"
+            android:layout_marginTop="16dp"
             app:hideOnScroll="true">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:background="#00000000"
                 app:labelVisibilityMode="unlabeled"
                 app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
                 app:menu="@menu/bottom_navigation_menu" />
