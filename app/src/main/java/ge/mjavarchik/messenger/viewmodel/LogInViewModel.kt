@@ -15,6 +15,11 @@ class LogInViewModel(
     private var _signedIn = MutableLiveData<Boolean>()
     val signedIn: LiveData<Boolean> get() = _signedIn
 
+    fun wasAlreadyLoggedIn(): Boolean{
+        return preferenceRepository.getLoggedInUsername() != null
+    }
+
+
     fun signInUser(username: String, password: String) {
         viewModelScope.launch {
             val userEntity = firebaseRepository.getUserByUsername(username)

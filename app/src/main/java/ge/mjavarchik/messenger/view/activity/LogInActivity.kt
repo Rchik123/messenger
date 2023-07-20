@@ -19,11 +19,21 @@ class LogInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        onIfLoggedIn()
+
         binding = LogInPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpSignedInObserver()
         setUpSignInBtnListener()
+    }
+
+    private fun onIfLoggedIn() {
+        if(viewModel.wasAlreadyLoggedIn()){
+            startActivity(Intent(this, LoggedInActivity::class.java))
+            finish()
+        }
     }
 
     private fun setUpSignInBtnListener() {
