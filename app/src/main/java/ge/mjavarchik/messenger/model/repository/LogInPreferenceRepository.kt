@@ -2,6 +2,7 @@ package ge.mjavarchik.messenger.model.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 class LogInPreferenceRepository(private val context: Context) {
 
@@ -15,10 +16,12 @@ class LogInPreferenceRepository(private val context: Context) {
 
     fun setLoggedInUsername(username: String) {
         editor.putString(KEY_LOGGED_IN_USERNAME, username)
+        editor.commit()
     }
 
     fun clearLoggedInUsername() {
         editor.remove(KEY_LOGGED_IN_USERNAME)
+        editor.commit()
     }
 
     companion object {

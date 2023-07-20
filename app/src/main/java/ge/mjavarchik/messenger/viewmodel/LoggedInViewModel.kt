@@ -17,11 +17,11 @@ class LoggedInViewModel(
     private var _loggedInUser = MutableLiveData<User>()
     val loggedInUser: LiveData<User> get() = _loggedInUser
 
-//    init {
-//        viewModelScope.launch {
-//            _loggedInUser.postValue(getLoggedInUser()) // TODO: think of solution
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            _loggedInUser.postValue(getLoggedInUser())
+        }
+    }
 
     fun updateUserInformation(newNickname: String, newProfession: String) {
         viewModelScope.launch {
