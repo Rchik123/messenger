@@ -66,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16"
         android:backgroundTint="@color/white"
-        android:onClick="signUP"
         android:text="@string/sign_out"
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,23 +1,28 @@
 package ge.mjavarchik.messenger.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.repository.FirebaseRepository
+import ge.mjavarchik.messenger.model.repository.LogInPreferenceRepository
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
-class LogInViewModel(private val repository: FirebaseRepository): ViewModel() {
+class LogInViewModel(
+    private val firebaseRepository: FirebaseRepository,
+    private val preferenceRepository: LogInPreferenceRepository
+) : ViewModel() {
 
     private var _signedIn = MutableLiveData<Boolean>()
     val signedIn: LiveData<Boolean> get() = _signedIn
-    private var accountUsername: String = "No username"
-    private var accountProfession: String = "No profession"
-    fun signInUser(nickname: String, password: String){
+
+    fun signInUser(username: String, password: String) {
         viewModelScope.launch {
-            val userEntity = repository.getUser(nickname)
+            val userEntity = firebaseRepository.getUserByUsername(username)
             userEntity?.let {
                 val isPasswordCorrect = BCrypt.checkpw(password, it.hashedPassword)
-                accountUsername = userEntity.nickname
-                accountProfession = userEntity.profession
+                if (isPasswordCorrect) {
+                    preferenceRepository.setLoggedInUsername(it.username)
+                }
                 _signedIn.postValue(isPasswordCorrect)
             } ?: run {
                 _signedIn.postValue(false)
@@ -25,19 +30,17 @@ class LogInViewModel(private val repository: FirebaseRepository): ViewModel() {
         }
     }
 
-    fun getUserName(): String = accountUsername
-
-    fun getProfession(): String = accountProfession
-
     companion object {
-        fun getViewModelFactory(): LogInViewModelFactory {
-            return LogInViewModelFactory()
+        fun getViewModelFactory(context: Context): LogInViewModelFactory {
+            return LogInViewModelFactory(context)
         }
     }
 }
 
-class LogInViewModelFactory : ViewModelProvider.Factory {
+class LogInViewModelFactory(
+    private val context: Context
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LogInViewModel(FirebaseRepository()) as T
+        return LogInViewModel(FirebaseRepository(), LogInPreferenceRepository(context)) as T
     }
 }

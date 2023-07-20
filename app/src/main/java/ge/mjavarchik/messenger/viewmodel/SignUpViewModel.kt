@@ -18,11 +18,11 @@ class SignUpViewModel(private val repository: FirebaseRepository) : ViewModel() 
     private var _signedUp = MutableLiveData<Boolean>()
     val signedUp: LiveData<Boolean> get() = _signedUp
 
-    fun signUpUser(user: User) {
+    fun signUpUser(user: User, password: String) {
         viewModelScope.launch {
-            val hashedPassword = BCrypt.hashpw(user.password, BCrypt.gensalt())
-            val userEntity = UserEntity(user.nickname, user.profession, hashedPassword)
-            enteredUsername = userEntity.nickname
+            val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+            val userEntity = UserEntity(user.username, user.nickname, user.profession, hashedPassword)
+            enteredUsername = userEntity.username
             _signedUp.postValue(repository.addUser(userEntity))
         }
     }
