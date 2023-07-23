@@ -33,4 +33,10 @@
     <dimen name="radius_32">32dp</dimen>
     <dimen name="toolbarHeight">100dp</dimen>
     <dimen name="search_bar_height">50dp</dimen>
+
+    <dimen name="height_et_enter_message">70dp</dimen>
+    <dimen name="margin_et_enter_message">15dp</dimen>
+    <dimen name="padding_vertical_et_enter_message">10dp</dimen>
+    <dimen name="padding_start_et_enter_message">35dp</dimen>
+    <dimen name="padding_end_et_enter_message">70dp</dimen>
 </resources>
