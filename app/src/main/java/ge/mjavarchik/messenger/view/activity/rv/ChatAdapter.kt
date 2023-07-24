@@ -1,6 +1,5 @@
 package ge.mjavarchik.messenger.view.activity.rv
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -33,7 +32,6 @@ class ChatAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.d("rv", messages.size.toString())
         return messages.size
     }
 

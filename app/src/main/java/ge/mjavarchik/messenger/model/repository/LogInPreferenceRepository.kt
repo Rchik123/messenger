@@ -2,7 +2,6 @@ package ge.mjavarchik.messenger.model.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 
 class LogInPreferenceRepository(private val context: Context) {
 
