@@ -18,8 +18,12 @@
             android:name=".view.activity.LoggedInActivity"
             android:exported="false" />
         <activity
+            android:name=".view.activity.UserPagesActivity"
+            android:exported="false"/>
+        <activity
             android:name=".view.activity.LogInActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

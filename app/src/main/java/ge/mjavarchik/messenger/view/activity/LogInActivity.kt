@@ -31,7 +31,7 @@ class LogInActivity : AppCompatActivity() {
 
     private fun onIfLoggedIn() {
         if(viewModel.wasAlreadyLoggedIn()){
-            startActivity(Intent(this, LoggedInActivity::class.java))
+            startActivity(Intent(this, UserPagesActivity::class.java))
             finish()
         }
     }
@@ -56,7 +56,7 @@ class LogInActivity : AppCompatActivity() {
         viewModel.signedIn.observe(this) { signedIn ->
             if (signedIn) {
                 Toast.makeText(this, "Log in successful", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, LoggedInActivity::class.java))
+                startActivity(Intent(this, UserPagesActivity::class.java))
                 finish()
             } else {
                 Toast.makeText(
