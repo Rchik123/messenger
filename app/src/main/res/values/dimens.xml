@@ -34,14 +34,23 @@
     <dimen name="toolbarHeight">100dp</dimen>
     <dimen name="search_bar_height">50dp</dimen>
 
+    <!--> chat layout <-->
     <dimen name="height_et_enter_message">70dp</dimen>
     <dimen name="margin_et_enter_message">15dp</dimen>
     <dimen name="padding_vertical_et_enter_message">10dp</dimen>
     <dimen name="padding_start_et_enter_message">35dp</dimen>
     <dimen name="padding_end_et_enter_message">70dp</dimen>
     <dimen name="padding_end_ib_enter_message">40dp</dimen>
-
-    <dimen name="diam_civ_tb_profile_pic">45dp</dimen>
-    <dimen name="margin_end_civ_tb_profile_pic">20dp</dimen>
-    <dimen name="border_width_civ_tb_profile_pic">2dp</dimen>
+    <dimen name="margin_end_civ_tb_profile_pic">30dp</dimen>
+    <dimen name="height_chat_collapsing_toolbar">140dp</dimen>
+    <dimen name="margin_start_chat_collapsing_toolbar_back">15dp</dimen>
+    <dimen name="margin_top_chat_collapsing_toolbar_back">15dp</dimen>
+    <dimen name="margin_start_collapsing_toolbar_nickname">30dp</dimen>
+    <dimen name="margin_top_collapsing_toolbar_nickname">60dp</dimen>
+    <dimen name="font_size_collapsing_toolbar_nickname">24sp</dimen>
+    <dimen name="margin_start_collapsing_toolbar_profession">30dp</dimen>
+    <dimen name="margin_end_collapsing_toolbar_pfp">30dp</dimen>
+    <dimen name="margin_bottom_collapsing_toolbar_pfp">30dp</dimen>
+    <dimen name="border_width_chat_pfp">2dp</dimen>
+    <dimen name="diam_chat_pfp">45dp</dimen>
 </resources>
