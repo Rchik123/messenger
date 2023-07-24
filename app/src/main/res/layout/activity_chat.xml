@@ -60,6 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_start_collapsing_toolbar_profession"
+                        android:layout_marginTop="@dimen/margin_top_collapsing_toolbar_profession"
                         android:text="Profession"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +84,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin">
+                    app:layout_collapseMode="pin"
+                    android:visibility="invisible">
 
                     <ImageButton
                         android:id="@+id/toolbar_back"
@@ -97,15 +99,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:visibility="visible"
-                        tools:text="nickname" />
+                        android:text="nickname" />
 
                     <TextView
                         android:id="@+id/toolbar_profession"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        tools:text="profession"
+                        android:text="profession"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent" />
 

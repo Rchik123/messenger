@@ -3,6 +3,9 @@ package ge.mjavarchik.messenger.view.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.core.view.size
+import com.google.android.material.appbar.AppBarLayout
 import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
 import ge.mjavarchik.messenger.view.activity.rv.ChatAdapter
@@ -18,10 +21,28 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpRvAdapter()
+        setCollapsedToolbarListener()
+    }
+
+    private fun setCollapsedToolbarListener() {
+        binding.clAbl.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (appBarLayout.totalScrollRange + verticalOffset == 0) {
+                binding.toolbar.visibility = View.VISIBLE
+                binding.collapsingToolbarBack.visibility = View.INVISIBLE
+                binding.collapsingToolbarNickname.visibility = View.INVISIBLE
+                binding.collapsingToolbarProfession.visibility = View.INVISIBLE
+                binding.collapsingToolbarPfp.visibility = View.INVISIBLE
+            } else {
+                binding.toolbar.visibility = View.INVISIBLE
+                binding.collapsingToolbarBack.visibility = View.VISIBLE
+                binding.collapsingToolbarNickname.visibility = View.VISIBLE
+                binding.collapsingToolbarProfession.visibility = View.VISIBLE
+                binding.collapsingToolbarPfp.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setUpRvAdapter() {
-        Log.d("shevida aq", "diax")
         binding.recyclerView.adapter = ChatAdapter(
             "user1",
             arrayListOf(
