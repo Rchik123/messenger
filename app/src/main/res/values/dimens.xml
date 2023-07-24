@@ -39,4 +39,5 @@
     <dimen name="padding_vertical_et_enter_message">10dp</dimen>
     <dimen name="padding_start_et_enter_message">35dp</dimen>
     <dimen name="padding_end_et_enter_message">70dp</dimen>
+    <dimen name="padding_end_ib_enter_message">40dp</dimen>
 </resources>
