@@ -21,6 +21,7 @@ class FirebaseRepository {
                 mapOf(
                     "nickname" to userEntity.nickname,
                     "profession" to userEntity.profession,
+                    "avatar" to userEntity.avatar,
                     "hashedPassword" to userEntity.hashedPassword
                 )
             )
@@ -39,15 +40,15 @@ class FirebaseRepository {
                 val nickname = userInformation["nickname"] as String
                 val profession = userInformation["profession"] as String
                 val hashedPassword = userInformation["hashedPassword"] as String
-
-                UserEntity(username, nickname, profession, hashedPassword)
+                val avatar = userInformation["avatar"] as String
+                UserEntity(username, nickname, profession, avatar, hashedPassword)
             } else {
                 null
             }
         }
     }
 
-    suspend fun updateUser(username: String, newNickname: String, newProfession: String) {
+    suspend fun updateUser(username: String, newNickname: String, newProfession: String, newAvatar: String) {
         return withContext(Dispatchers.IO) {
             val user = getUserByUsername(username)
             user?.let {
@@ -56,6 +57,7 @@ class FirebaseRepository {
                     mapOf(
                         "nickname" to newNickname,
                         "profession" to newProfession,
+                        "avatar" to newAvatar,
                         "hashedPassword" to it.hashedPassword
                     )
                 )
