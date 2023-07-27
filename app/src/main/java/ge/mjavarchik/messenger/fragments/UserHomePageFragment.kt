@@ -38,8 +38,65 @@ class UserHomePageFragment : Fragment() {
                 "Ragac mesiji",
                 "Mariam",
                 "Sxvisi saxeli"
+            ),
+            Message(
+                "2",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+            Message(
+                "3",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+            Message(
+                "4",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+            Message(
+                "5",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+            Message(
+                "6",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+
+            Message(
+                "7",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
+            ),
+            Message(
+                "8",
+                Date(),
+                "",
+                "Ragac mesiji",
+                "Mariam",
+                "Sxvisi saxeli"
             )
-        )
+            )
         chatRecView.adapter = ChatListAdapter(this, "vigac", list)
 
         //ragac
