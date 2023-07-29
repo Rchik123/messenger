@@ -6,15 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import ge.mjavarchik.messenger.adapters.ChatListAdapter
 import ge.mjavarchik.messenger.databinding.AllChatsPageBinding
 import ge.mjavarchik.messenger.model.api.Conversation
-import ge.mjavarchik.messenger.model.api.Message
+import ge.mjavarchik.messenger.viewmodel.LoggedInViewModel
+import ge.mjavarchik.messenger.viewmodel.LoggedInViewModelFactory
 import java.util.*
 
 class UserHomePageFragment : Fragment() {
-    private lateinit var _binding : AllChatsPageBinding
+
+    private val viewModel: LoggedInViewModel by viewModels {
+        LoggedInViewModelFactory(requireActivity().application)
+    }
+
+    private lateinit var _binding: AllChatsPageBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var chatRecView: RecyclerView
     override fun onCreateView(
@@ -30,78 +37,30 @@ class UserHomePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressBar = _binding.progressBar
         progressBar.visibility = View.VISIBLE
-        chatRecView =  _binding.conversations
-        var list = arrayListOf(
-            Conversation(
-                "1",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "2",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "3",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "4",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "5",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "6",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-
-            Conversation(
-                "7",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            ),
-            Conversation(
-                "8",
-                Date(),
-                "",
-                "Ragac mesiji",
-                "Mariam",
-                "Sxvisi saxeli"
-            )
-            )
-        chatRecView.adapter = ChatListAdapter(this, "vigac", list)
-
+        chatRecView = _binding.conversations
+        setUpAllUserObserver()
         //ragac
         progressBar.visibility = View.GONE
+    }
 
+    private fun setUpAllUserObserver() {
+        viewModel.listenToAllUsers()
+        viewModel.allUsers.observe(this) {
+            val conversationList = arrayListOf<Conversation>()
+            for (userEntity in it) {
+                conversationList.add(
+                    Conversation(
+                        "id",
+                        Date(),
+                        userEntity.avatar,
+                        "message",
+                        userEntity.username,
+                        userEntity.username
+                    )
+                )
+            }
+            chatRecView.adapter = ChatListAdapter(this, "vigac", conversationList)
+
+        }
     }
 }

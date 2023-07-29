@@ -3,22 +3,57 @@ package ge.mjavarchik.messenger.view.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
 import ge.mjavarchik.messenger.adapters.ChatAdapter
-import java.util.Date
+import ge.mjavarchik.messenger.viewmodel.ChatViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
+    private val viewModel: ChatViewModel by viewModels {
+        ChatViewModel.getViewModelFactory()
+    }
     private lateinit var binding: ActivityChatBinding
+
+    private val sender: String = "rezi"
+    private val receiver: String = "mariam"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUpRvAdapter()
         setCollapsedToolbarListener()
+        setUpSendButtonListener()
+        setUpConversationObserver()
+    }
+
+    private fun setUpConversationObserver() {
+        viewModel.listenToConversation(sender, receiver)
+        viewModel.conversation.observe(this) {
+            val messageList = arrayListOf<Message>()
+            it.messages?.let { map ->
+                for ((key, entity) in map) {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+                    val message = Message(
+                        entity.sender,
+                        receiver,
+                        entity.text,
+                        sdf.parse(entity.timestamp)
+                    )
+                    messageList.add(message)
+                }
+            }
+            binding.recyclerView.adapter = ChatAdapter(
+                sender,
+                ArrayList(messageList.sortedBy { it.date })
+            )
+        }
     }
 
     private fun setCollapsedToolbarListener() {
@@ -39,20 +74,12 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpRvAdapter() {
-        binding.recyclerView.adapter = ChatAdapter(
-            "user1",
-            arrayListOf(
-                Message("user1", "user2", "gamarjoba", Date(1000)),
-                Message("user2", "user1", "gamarjoba aseve", Date(1000)),
-                Message("user1", "user2", "Lorem ipsum dolor sit amet.", Date(1000)),
-                Message("user1", "user2", "ohooooo", Date(1000)),
-                Message("user1", "user2", "ohooooooooooo", Date(1000)),
-                Message("user2", "user1", "aaaaaaaa", Date(1000)),
-                Message("user2", "user1", "aaaaaaaa", Date(1000)),
-                Message("user2", "user1", "aaaaaaaa", Date(1000)),
-                Message("user2", "user1", "aaaaaaaa", Date(1000))
-            )
-        )
+    private fun setUpSendButtonListener() {
+        binding.ibEnterMessage.setOnClickListener {
+            val editText = binding.etEnterMessage
+            val text = editText.text.toString()
+            editText.text.clear()
+            viewModel.sendMessage(sender, receiver, text)
+        }
     }
 }
