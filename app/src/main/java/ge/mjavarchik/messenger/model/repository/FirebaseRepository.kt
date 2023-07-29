@@ -1,22 +1,15 @@
 package ge.mjavarchik.messenger.model.repository
 
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
-import android.nfc.Tag
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
-import ge.mjavarchik.messenger.model.data.UserEntity
-import kotlinx.coroutines.tasks.await
-import android.widget.Toast
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import ge.mjavarchik.messenger.model.data.UserEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
-import java.util.*
 
 class FirebaseRepository {
 

@@ -2,7 +2,6 @@ package ge.mjavarchik.messenger.viewmodel
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.api.User
 import ge.mjavarchik.messenger.model.mappers.UserMapper
