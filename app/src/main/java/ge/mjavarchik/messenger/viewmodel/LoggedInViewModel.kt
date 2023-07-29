@@ -1,6 +1,8 @@
 package ge.mjavarchik.messenger.viewmodel
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.api.User
 import ge.mjavarchik.messenger.model.mappers.UserMapper
@@ -23,10 +25,10 @@ class LoggedInViewModel(
         }
     }
 
-    fun updateUserInformation(newNickname: String, newProfession: String) {
+    fun updateUserInformation(newNickname: String, newProfession: String, newAvatar: Bitmap?) {
         viewModelScope.launch {
             _loggedInUser.value?.let {
-                firebaseRepository.updateUser(it.username, newNickname, newProfession)
+                firebaseRepository.updateUser(it.username, newNickname, newProfession, newAvatar)
             }
         }
     }

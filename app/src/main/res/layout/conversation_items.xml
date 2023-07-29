@@ -10,7 +10,6 @@
         android:layout_width="@dimen/margin_100"
         android:layout_height="@dimen/margin_100"
         android:src="@drawable/avatar_image_placeholder"
-        app:civ_border_overlay="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
