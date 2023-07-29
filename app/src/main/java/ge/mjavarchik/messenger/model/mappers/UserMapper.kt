@@ -11,6 +11,7 @@ class UserMapper {
                 it.username,
                 it.nickname,
                 it.profession,
+                it.avatar,
                 hashedPassword
             )
         }
@@ -21,7 +22,8 @@ class UserMapper {
             User(
                 it.username,
                 it.nickname,
-                it.profession
+                it.profession,
+                it.avatar
             )
         }
     }

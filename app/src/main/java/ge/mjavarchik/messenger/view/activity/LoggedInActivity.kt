@@ -20,7 +20,7 @@ class LoggedInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpLoggedInUserObserver()
-        setUpUpdateBtnListener()
+//        setUpUpdateBtnListener()
         setUpSignOutBtnListener()
     }
 
@@ -38,12 +38,13 @@ class LoggedInActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpUpdateBtnListener() {
-        binding.btnUpdate.setOnClickListener {
-            viewModel.updateUserInformation(
-                binding.etUsername.text.toString(),
-                binding.etProfession.text.toString()
-            )
-        }
-    }
+//    private fun setUpUpdateBtnListener() {
+//        binding.btnUpdate.setOnClickListener {
+//            viewModel.updateUserInformation(
+//                binding.etUsername.text.toString(),
+//                binding.etProfession.text.toString(),
+//                ""
+//            )
+//        }
+//    }
 }

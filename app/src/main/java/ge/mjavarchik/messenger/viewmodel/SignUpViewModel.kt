@@ -21,7 +21,7 @@ class SignUpViewModel(private val repository: FirebaseRepository) : ViewModel() 
     fun signUpUser(user: User, password: String) {
         viewModelScope.launch {
             val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
-            val userEntity = UserEntity(user.username, user.nickname, user.profession, hashedPassword)
+            val userEntity = UserEntity(user.username, user.nickname, user.profession, "", hashedPassword)
             enteredUsername = userEntity.username
             _signedUp.postValue(repository.addUser(userEntity))
         }

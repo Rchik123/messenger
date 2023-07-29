@@ -91,11 +91,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            android:focusable="true">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+            android:focusable="true"
+            android:nestedScrollingEnabled="true">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/conversations"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </ScrollView>
