@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.mjavarchik.messenger.databinding.IncommingMessageBinding
 import ge.mjavarchik.messenger.databinding.OutMessageBinding
 import ge.mjavarchik.messenger.model.api.Message
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatAdapter(
     private val loggedInUser: String,
@@ -22,12 +25,13 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val hourMinuteFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         if (holder is OutMessageViewHolder) {
             holder.tvMessage.text = messages[position].message
-//            holder.tvDate.text = messages[position].date.toString()
+            holder.tvDate.text = hourMinuteFormat.format(messages[position].date)
         } else if (holder is InMessageViewHolder) {
             holder.tvMessage.text = messages[position].message
-//            holder.tvDate.text = messages[position].date.toString() // TODO: add date formatting
+            holder.tvDate.text = hourMinuteFormat.format(messages[position].date)
         }
     }
 

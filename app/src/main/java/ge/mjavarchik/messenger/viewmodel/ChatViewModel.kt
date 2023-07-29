@@ -5,6 +5,9 @@ import ge.mjavarchik.messenger.model.data.ConversationEntity
 import ge.mjavarchik.messenger.model.data.MessageEntity
 import ge.mjavarchik.messenger.model.repository.ConversationFirebaseRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
 
 class ChatViewModel(
     private val conversationFirebaseRepository: ConversationFirebaseRepository,
@@ -21,8 +24,10 @@ class ChatViewModel(
     }
 
     fun sendMessage(sender: String, receiver: String, text: String) = viewModelScope.launch {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val currentDate = sdf.format(Date())
         conversationFirebaseRepository.addMessageToConversation(sender, receiver,
-            MessageEntity(sender, null, text)
+            MessageEntity(sender, currentDate, text)
         )
     }
 

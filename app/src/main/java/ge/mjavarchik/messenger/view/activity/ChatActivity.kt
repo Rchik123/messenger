@@ -8,7 +8,9 @@ import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
 import ge.mjavarchik.messenger.adapters.ChatAdapter
 import ge.mjavarchik.messenger.viewmodel.ChatViewModel
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
@@ -35,21 +37,21 @@ class ChatActivity : AppCompatActivity() {
         viewModel.conversation.observe(this) {
             val messageList = arrayListOf<Message>()
             it.messages?.let { map ->
-                for ((key, value) in map) {
-                    val entity = value
+                for ((key, entity) in map) {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
                     val message = Message(
                         entity.sender,
                         receiver,
                         entity.text,
-                        null
+                        sdf.parse(entity.timestamp)
                     )
                     messageList.add(message)
                 }
             }
-
             binding.recyclerView.adapter = ChatAdapter(
                 sender,
-                messageList
+                ArrayList(messageList.sortedBy { it.date })
             )
         }
     }
