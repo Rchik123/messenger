@@ -1,0 +1,171 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/enter_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/cl_abl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_chat_collapsing_toolbar"
+                android:background="@color/blue"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/collapsing_toolbar_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_start_chat_collapsing_toolbar_back"
+                        android:layout_marginTop="@dimen/margin_top_chat_collapsing_toolbar_back"
+                        android:backgroundTint="@color/transparent"
+                        android:src="@drawable/baseline_arrow_back_ios_30"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/collapsing_toolbar_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/margin_start_collapsing_toolbar_nickname"
+                        android:layout_marginTop="@dimen/margin_top_collapsing_toolbar_nickname"
+                        android:text="Nickname"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_collapsing_toolbar_nickname"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/collapsing_toolbar_profession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_start_collapsing_toolbar_profession"
+                        android:layout_marginTop="@dimen/margin_top_collapsing_toolbar_profession"
+                        android:text="Profession"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/collapsing_toolbar_nickname" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/collapsing_toolbar_pfp"
+                        android:layout_width="@dimen/diam_chat_pfp"
+                        android:layout_height="@dimen/diam_chat_pfp"
+                        android:layout_marginEnd="@dimen/margin_end_collapsing_toolbar_pfp"
+                        android:layout_marginBottom="@dimen/margin_bottom_collapsing_toolbar_pfp"
+                        android:src="@drawable/avatar_image_placeholder"
+                        app:civ_border_width="@dimen/border_width_chat_pfp"
+                        app:civ_border_color="@color/light_blue"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    android:visibility="invisible">
+
+                    <ImageButton
+                        android:id="@+id/toolbar_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/transparent"
+                        android:src="@drawable/baseline_arrow_back_ios_30" />
+
+                    <TextView
+                        android:id="@+id/toolbar_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="nickname" />
+
+                    <TextView
+                        android:id="@+id/toolbar_profession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="profession"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/toolbar_pfp"
+                        android:layout_width="@dimen/diam_chat_pfp"
+                        android:layout_height="@dimen/diam_chat_pfp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/margin_end_civ_tb_profile_pic"
+                        app:civ_border_width="@dimen/border_width_chat_pfp"
+                        app:civ_border_color="@color/light_blue"
+                        android:src="@drawable/avatar_image_placeholder" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:id="@+id/enter_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/et_enter_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_et_enter_message"
+            android:layout_marginStart="@dimen/margin_et_enter_message"
+            android:layout_marginTop="@dimen/margin_et_enter_message"
+            android:layout_marginEnd="@dimen/margin_et_enter_message"
+            android:layout_marginBottom="@dimen/margin_et_enter_message"
+            android:background="@drawable/enter_message_background"
+            android:hint="@string/hint_et_enter_message"
+            android:inputType="textMultiLine"
+            android:paddingVertical="@dimen/padding_vertical_et_enter_message"
+            android:paddingStart="@dimen/padding_start_et_enter_message"
+            android:paddingEnd="@dimen/padding_end_et_enter_message" />
+
+        <ImageButton
+            android:id="@+id/ib_enter_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/padding_end_ib_enter_message"
+            android:background="@color/transparent"
+            android:src="@drawable/baseline_circle_30" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

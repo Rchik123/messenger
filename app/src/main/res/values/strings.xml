@@ -13,4 +13,5 @@
     <string name="update">Update</string>
     <string name="search">Search button</string>
     <string name="Search_txt">Search</string>
+    <string name="hint_et_enter_message">Message</string>
 </resources>

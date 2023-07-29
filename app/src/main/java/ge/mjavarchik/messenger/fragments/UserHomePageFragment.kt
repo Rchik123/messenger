@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ge.mjavarchik.messenger.adapters.ChatListAdapter
 import ge.mjavarchik.messenger.databinding.AllChatsPageBinding
+import ge.mjavarchik.messenger.model.api.Conversation
 import ge.mjavarchik.messenger.model.api.Message
 import java.util.*
 
@@ -30,8 +31,8 @@ class UserHomePageFragment : Fragment() {
         progressBar = _binding.progressBar
         progressBar.visibility = View.VISIBLE
         chatRecView =  _binding.conversations
-        var list = arrayListOf<Message>(
-            Message(
+        var list = arrayListOf(
+            Conversation(
                 "1",
                 Date(),
                 "",
@@ -39,7 +40,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "2",
                 Date(),
                 "",
@@ -47,7 +48,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "3",
                 Date(),
                 "",
@@ -55,7 +56,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "4",
                 Date(),
                 "",
@@ -63,7 +64,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "5",
                 Date(),
                 "",
@@ -71,7 +72,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "6",
                 Date(),
                 "",
@@ -80,7 +81,7 @@ class UserHomePageFragment : Fragment() {
                 "Sxvisi saxeli"
             ),
 
-            Message(
+            Conversation(
                 "7",
                 Date(),
                 "",
@@ -88,7 +89,7 @@ class UserHomePageFragment : Fragment() {
                 "Mariam",
                 "Sxvisi saxeli"
             ),
-            Message(
+            Conversation(
                 "8",
                 Date(),
                 "",
