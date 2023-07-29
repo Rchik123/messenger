@@ -20,7 +20,6 @@ class LoggedInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpLoggedInUserObserver()
-//        setUpUpdateBtnListener()
         setUpSignOutBtnListener()
     }
 
@@ -37,14 +36,4 @@ class LoggedInActivity : AppCompatActivity() {
             binding.etProfession.setText(it.profession)
         }
     }
-
-//    private fun setUpUpdateBtnListener() {
-//        binding.btnUpdate.setOnClickListener {
-//            viewModel.updateUserInformation(
-//                binding.etUsername.text.toString(),
-//                binding.etProfession.text.toString(),
-//                ""
-//            )
-//        }
-//    }
 }

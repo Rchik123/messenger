@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.api.User
+import ge.mjavarchik.messenger.model.data.ConversationEntity
+import ge.mjavarchik.messenger.model.data.UserEntity
 import ge.mjavarchik.messenger.model.mappers.UserMapper
 import ge.mjavarchik.messenger.model.repository.FirebaseRepository
 import ge.mjavarchik.messenger.model.repository.LogInPreferenceRepository
@@ -17,6 +19,8 @@ class LoggedInViewModel(
 
     private var _loggedInUser = MutableLiveData<User>()
     val loggedInUser: LiveData<User> get() = _loggedInUser
+    private val _allUsers = MutableLiveData<List<UserEntity>>()
+    val allUsers: LiveData<List<UserEntity>> get() = _allUsers
 
     init {
         viewModelScope.launch {
@@ -29,6 +33,13 @@ class LoggedInViewModel(
             _loggedInUser.value?.let {
                 firebaseRepository.updateUser(it.username, newNickname, newProfession, newAvatar)
             }
+        }
+    }
+
+    fun listenToAllUsers() {
+        firebaseRepository.listenToAllUsers()
+        firebaseRepository.usersLiveData.observeForever { users ->
+            _allUsers.postValue(users)
         }
     }
 
