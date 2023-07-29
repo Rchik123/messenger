@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
-import ge.mjavarchik.messenger.view.activity.rv.ChatAdapter
+import ge.mjavarchik.messenger.adapters.ChatAdapter
 import java.util.Date
 
 class ChatActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package ge.mjavarchik.messenger.view.activity.rv
+package ge.mjavarchik.messenger.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

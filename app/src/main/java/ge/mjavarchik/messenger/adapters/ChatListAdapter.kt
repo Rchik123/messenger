@@ -8,17 +8,25 @@ import com.bumptech.glide.Glide
 import ge.mjavarchik.messenger.R
 import ge.mjavarchik.messenger.databinding.ConversationItemsBinding
 import ge.mjavarchik.messenger.fragments.UserHomePageFragment
-import ge.mjavarchik.messenger.model.api.Message
+import ge.mjavarchik.messenger.model.api.Conversation
 import java.util.*
 
 
-class ChatListAdapter(private var context: UserHomePageFragment, private var userName: String,
-                      var list: List<Message>) :
-    RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
+class ChatListAdapter(
+    private var context: UserHomePageFragment,
+    private var userName: String,
+    var list: List<Conversation>
+) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ConversationItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            ConversationItemsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
 
@@ -28,23 +36,24 @@ class ChatListAdapter(private var context: UserHomePageFragment, private var use
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var friendsAvatarString = list[holder.adapterPosition].friendsAvatar
-        if(friendsAvatarString == null || friendsAvatarString == ""){
+        if (friendsAvatarString == null || friendsAvatarString == "") {
             holder.profileImage.setImageResource(R.drawable.avatar_image_placeholder)
-        } else if(friendsAvatarString != "") {
+        } else if (friendsAvatarString != "") {
             Glide.with(context).load(friendsAvatarString).circleCrop().into(holder.profileImage)
         }
         val date = list[holder.adapterPosition].date
         var dateStr = ""
-        if(date != null){
+        if (date != null) {
             dateStr = convertTime(date)
         }
         holder.time.text = dateStr
         holder.message.text = list[holder.adapterPosition].messageText
 
     }
+
     private fun convertTime(date: Date): String {
         val difference = Calendar.getInstance().timeInMillis - date.time
-        val secDifference = difference/ 1000
+        val secDifference = difference / 1000
         // Calculate time difference in minutes, hours, and days
         val minutes = (difference / (1000 * 60)).toInt()
         val hours = (difference / (1000 * 60 * 60)).toInt()
@@ -63,6 +72,7 @@ class ChatListAdapter(private var context: UserHomePageFragment, private var use
             }
         }
     }
+
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return list.size
