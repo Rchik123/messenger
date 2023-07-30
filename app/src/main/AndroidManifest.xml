@@ -19,11 +19,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
         </activity>
+
         <activity
             android:name=".view.activity.LoggedInActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.UserPagesActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.activity.SearchActivity"
             android:exported="false"/>
         <activity
             android:name=".view.activity.LogInActivity"

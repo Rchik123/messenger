@@ -3,6 +3,7 @@ package ge.mjavarchik.messenger.view.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import ge.mjavarchik.messenger.R
@@ -112,8 +113,12 @@ class ChatActivity : AppCompatActivity() {
         binding.ibEnterMessage.setOnClickListener {
             val editText = binding.etEnterMessage
             val text = editText.text.toString()
-            editText.text.clear()
-            viewModel.sendMessage(sender, receiver, text)
+            if(text.isEmpty()){
+                Toast.makeText(this, "Message is empty", Toast.LENGTH_SHORT).show()
+            } else {
+                editText.text.clear()
+                viewModel.sendMessage(sender, receiver, text)
+            }
         }
     }
 }

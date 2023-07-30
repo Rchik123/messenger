@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/all_chats"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/all_chat_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbarHeight"
+                android:layout_gravity="bottom"
+                android:background="@color/facebook_blue"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                <ImageView
+                    android:id="@+id/backbutton"
+                    android:layout_width="@dimen/search_bar_height"
+                    android:onClick="goBack"
+                    android:layout_height="@dimen/search_bar_height"
+                    android:src="@drawable/ic_back"
+                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:alpha="0.6"
+                    android:background="@drawable/search_shape">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/search_photo"
+                            android:layout_width="@dimen/search_bar_height"
+                            android:layout_height="@dimen/search_bar_height"
+                            android:src="@drawable/ic_search"
+                            app:layout_constraintEnd_toStartOf="@id/search_text"
+                            tools:ignore="ImageContrastCheck" />
+
+                        <EditText
+                            android:id="@+id/search_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/search_bar_height"
+                            android:layout_marginEnd="@dimen/margin_16"
+
+                            android:hint="@string/Search_txt"
+                            android:inputType="text"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/font_16"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/search_photo"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Search" />
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
