@@ -30,7 +30,7 @@
                 android:id="@+id/collapsing_toolbar"
                 app:layout_collapseMode="parallax"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:contentScrim="@color/blue">
+                app:contentScrim="@color/facebook_blue">
                 <ImageView
                     android:id="@+id/imageView"
                     android:background="@color/empty"
