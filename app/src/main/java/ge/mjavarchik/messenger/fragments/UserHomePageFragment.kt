@@ -2,7 +2,6 @@ package ge.mjavarchik.messenger.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +20,6 @@ import java.util.*
 
 class UserHomePageFragment : Fragment() {
 
-    private lateinit var preferences: LogInPreferenceRepository
-
     private val viewModel: LoggedInViewModel by viewModels {
         LoggedInViewModelFactory(requireActivity().application)
     }
@@ -30,6 +27,7 @@ class UserHomePageFragment : Fragment() {
     private lateinit var _binding: AllChatsPageBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var chatRecView: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,18 +39,14 @@ class UserHomePageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences = LogInPreferenceRepository(requireActivity().applicationContext)
         progressBar = _binding.progressBar
         progressBar.visibility = View.VISIBLE
         chatRecView = _binding.conversations
         setUpAllUserObserver()
-        Log.d("asd", preferences.toString())
-        //ragac
         progressBar.visibility = View.GONE
     }
 
     private fun setUpAllUserObserver() {
-        viewModel.listenToAllUsers()
         viewModel.allUsers.observe(this) {
             val conversationList = arrayListOf<Conversation>()
             for (userEntity in it) {
@@ -69,15 +63,14 @@ class UserHomePageFragment : Fragment() {
             }
             chatRecView.adapter = ChatListAdapter(
                 this,
-                "vigac",
+                "vigac", // TODO: amis gamoyeneba dasamatebeli
                 conversationList,
                 object : ChatListAdapter.OnItemClickListener {
                     override fun onItemClick(conversation: Conversation) {
-                        val intent = Intent(requireContext(), ChatActivity::class.java)
-                        val sender = preferences?.getLoggedInUsername()
-                        val receiver = conversation.from
-                        intent.putExtra("sender", sender)
-                        intent.putExtra("receiver", receiver)
+                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                            putExtra("sender", viewModel.loggedInUser.value?.username)
+                            putExtra("receiver", conversation.from)
+                        }
                         startActivity(intent)
                     }
                 }

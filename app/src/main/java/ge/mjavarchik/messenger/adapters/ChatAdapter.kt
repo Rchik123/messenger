@@ -16,6 +16,8 @@ class ChatAdapter(
     private val messages: ArrayList<Message>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val hourMinuteFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == MessageType.OUT.value) {
             OutMessageViewHolder(OutMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -25,7 +27,6 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val hourMinuteFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         if (holder is OutMessageViewHolder) {
             holder.tvMessage.text = messages[position].message
             holder.tvDate.text = hourMinuteFormat.format(messages[position].date)

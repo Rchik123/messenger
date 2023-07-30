@@ -6,7 +6,6 @@ import ge.mjavarchik.messenger.model.data.MessageEntity
 import ge.mjavarchik.messenger.model.repository.ConversationFirebaseRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
 
 class ChatViewModel(

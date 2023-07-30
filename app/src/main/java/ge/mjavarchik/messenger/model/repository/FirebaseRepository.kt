@@ -9,8 +9,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import ge.mjavarchik.messenger.model.api.User
-import ge.mjavarchik.messenger.model.data.ConversationEntity
 import ge.mjavarchik.messenger.model.data.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -23,6 +21,10 @@ class FirebaseRepository {
     private val storage: FirebaseStorage = FirebaseStorage.getInstance(STORAGE_URL)
 
     val usersLiveData = MutableLiveData<List<UserEntity>>()
+
+    init {
+        listenToAllUsers()
+    }
 
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
@@ -59,37 +61,6 @@ class FirebaseRepository {
         }
     }
 
-    fun listenToAllUsers() {
-        val reference = database.getReference("users")
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userList = mutableListOf<UserEntity>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val username = childSnapshot.key
-                    val userMap = childSnapshot.value as? Map<*, *>?
-                    if (username != null) {
-                        userMap?.let {
-                            val user = UserEntity(
-                                username,
-                                it["nickname"] as String,
-                                it["profession"] as String,
-                                it["avatar"] as String,
-                                it["hashedPassword"] as String
-                            )
-                            userList.add(user)
-                        }
-                    }
-                }
-                usersLiveData.postValue(userList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("Firebase", "Error fetching users: " + databaseError.toException().toString())
-            }
-        })
-    }
-
-
     suspend fun updateUser(
         username: String,
         newNickname: String,
@@ -120,6 +91,34 @@ class FirebaseRepository {
                 }
             }
         }
+    }
+
+    private fun listenToAllUsers() {
+        val reference = database.getReference("users")
+        reference.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userList = mutableListOf<UserEntity>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val username = childSnapshot.key as String
+                    val userMap = childSnapshot.value as Map<*, *>
+                    userList.add(
+                        UserEntity(
+                            username,
+                            userMap["nickname"] as String,
+                            userMap["profession"] as String,
+                            userMap["avatar"] as String,
+                            userMap["hashedPassword"] as String
+                        )
+                    )
+                }
+                usersLiveData.postValue(userList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("Firebase", "Error fetching users: " + databaseError.toException().toString())
+            }
+        })
     }
 
     companion object {
