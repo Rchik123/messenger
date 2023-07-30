@@ -14,7 +14,7 @@ import ge.mjavarchik.messenger.model.api.User
 class SignUpActivity : AppCompatActivity() {
 
     private val viewModel: SignUpViewModel by viewModels {
-        SignUpViewModel.getViewModelFactory()
+        SignUpViewModel.getViewModelFactory(applicationContext)
     }
     private lateinit var binding: SignUpLayoutBinding
 

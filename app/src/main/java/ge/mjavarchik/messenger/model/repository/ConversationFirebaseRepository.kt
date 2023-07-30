@@ -1,7 +1,8 @@
 package ge.mjavarchik.messenger.model.repository
 
 
-import android.util.Log
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,7 +11,9 @@ import com.google.firebase.database.ValueEventListener
 import ge.mjavarchik.messenger.model.data.ConversationEntity
 import ge.mjavarchik.messenger.model.data.MessageEntity
 
-class ConversationFirebaseRepository {
+class ConversationFirebaseRepository(
+    private val context: Context
+) {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance(DATABASE_URL)
 
@@ -42,8 +45,8 @@ class ConversationFirebaseRepository {
             val messageRef = conversationRef.child("messages").push()
             messageRef.setValue(newMessage)
 
-        }.addOnFailureListener { exception ->
-            Log.e("Firebase", "Error getting data from database", exception)
+        }.addOnFailureListener {
+            Toast.makeText(context, "Error: could not send message", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -55,15 +58,17 @@ class ConversationFirebaseRepository {
                     val conversation = childSnapshot.getValue(ConversationEntity::class.java)
                     conversation?.let {
                         if ((it.user1 == user1 && it.user2 == user2) ||
-                            (it.user1 == user2 && it.user2 == user1)) {
+                            (it.user1 == user2 && it.user2 == user1)
+                        ) {
                             conversationLiveData.postValue(it)
                             return
                         }
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("Firebase", "Error listening to database" + databaseError.toException().toString())
+                Toast.makeText(context, "Error: could not retrieve data", Toast.LENGTH_SHORT).show()
             }
         })
     }

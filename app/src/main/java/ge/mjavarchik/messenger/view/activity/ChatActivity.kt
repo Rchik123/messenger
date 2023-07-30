@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 class ChatActivity : AppCompatActivity() {
 
     private val viewModel: ChatViewModel by viewModels {
-        ChatViewModel.getViewModelFactory()
+        ChatViewModel.getViewModelFactory(applicationContext)
     }
     private lateinit var binding: ActivityChatBinding
 

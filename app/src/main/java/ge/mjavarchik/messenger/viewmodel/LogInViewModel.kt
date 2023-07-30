@@ -46,6 +46,6 @@ class LogInViewModelFactory(
     private val context: Context
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LogInViewModel(FirebaseRepository(), LogInPreferenceRepository(context)) as T
+        return LogInViewModel(FirebaseRepository(context), LogInPreferenceRepository(context)) as T
     }
 }
