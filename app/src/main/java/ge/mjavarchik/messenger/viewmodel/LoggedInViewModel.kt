@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.api.User
-import ge.mjavarchik.messenger.model.data.ConversationEntity
 import ge.mjavarchik.messenger.model.data.UserEntity
 import ge.mjavarchik.messenger.model.mappers.UserMapper
 import ge.mjavarchik.messenger.model.repository.FirebaseRepository
@@ -26,6 +25,7 @@ class LoggedInViewModel(
         viewModelScope.launch {
             _loggedInUser.postValue(getLoggedInUser())
         }
+        listenToAllUsers()
     }
 
     fun updateUserInformation(newNickname: String, newProfession: String, newAvatar: Bitmap?) {
@@ -36,8 +36,7 @@ class LoggedInViewModel(
         }
     }
 
-    fun listenToAllUsers() {
-        firebaseRepository.listenToAllUsers()
+    private fun listenToAllUsers() {
         firebaseRepository.usersLiveData.observeForever { users ->
             _allUsers.postValue(users)
         }

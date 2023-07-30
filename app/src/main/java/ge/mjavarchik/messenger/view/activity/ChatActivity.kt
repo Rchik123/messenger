@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
 import ge.mjavarchik.messenger.adapters.ChatAdapter
+import ge.mjavarchik.messenger.model.mappers.MessageMapper
 import ge.mjavarchik.messenger.viewmodel.ChatViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +22,9 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var sender: String
     private lateinit var receiver: String
+
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    private val messageMapper = MessageMapper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,19 +41,14 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setUpConversationObserver() {
         viewModel.listenToConversation(sender, receiver)
-        viewModel.conversation.observe(this) {
+        viewModel.conversation.observe(this) { conversationEntity ->
             val messageList = arrayListOf<Message>()
-            it.messages?.let { map ->
-                for ((key, entity) in map) {
-                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-
-                    val message = Message(
-                        entity.sender,
-                        receiver,
-                        entity.text,
-                        sdf.parse(entity.timestamp)
-                    )
-                    messageList.add(message)
+            conversationEntity.messages?.let { map ->
+                for ((_, messageEntity) in map) {
+                    val message = messageMapper.fromEntity(messageEntity, receiver)
+                    message?.let {
+                        messageList.add(it)
+                    }
                 }
             }
             binding.recyclerView.adapter = ChatAdapter(

@@ -3,7 +3,6 @@ package ge.mjavarchik.messenger.adapters
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ge.mjavarchik.messenger.R
