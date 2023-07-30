@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.mjavarchik.messenger.adapters.ChatListAdapter
 import ge.mjavarchik.messenger.databinding.AllChatsPageBinding
 import ge.mjavarchik.messenger.model.api.Conversation
-import ge.mjavarchik.messenger.model.repository.LogInPreferenceRepository
 import ge.mjavarchik.messenger.view.activity.ChatActivity
 import ge.mjavarchik.messenger.viewmodel.LoggedInViewModel
 import ge.mjavarchik.messenger.viewmodel.LoggedInViewModelFactory
-import java.util.*
 
 class UserHomePageFragment : Fragment() {
 
@@ -42,34 +40,20 @@ class UserHomePageFragment : Fragment() {
         progressBar = _binding.progressBar
         progressBar.visibility = View.VISIBLE
         chatRecView = _binding.conversations
-        setUpAllUserObserver()
+        setUpAllConversationObserver()
         progressBar.visibility = View.GONE
     }
 
-    private fun setUpAllUserObserver() {
-        viewModel.allUsers.observe(this) {
-            val conversationList = arrayListOf<Conversation>()
-            for (userEntity in it) {
-                conversationList.add(
-                    Conversation(
-                        "id",
-                        Date(),
-                        userEntity.avatar,
-                        "message",
-                        userEntity.username,
-                        userEntity.username
-                    )
-                )
-            }
+    private fun setUpAllConversationObserver() {
+        viewModel.allConversations.observe(this) {
             chatRecView.adapter = ChatListAdapter(
                 this,
-                "vigac", // TODO: amis gamoyeneba dasamatebeli
-                conversationList,
+                it.sortedByDescending() { conversation -> conversation.lastMessage.date },
                 object : ChatListAdapter.OnItemClickListener {
                     override fun onItemClick(conversation: Conversation) {
                         val intent = Intent(requireContext(), ChatActivity::class.java).apply {
                             putExtra("sender", viewModel.loggedInUser.value?.username)
-                            putExtra("receiver", conversation.from)
+                            putExtra("receiver", conversation.user.username)
                         }
                         startActivity(intent)
                     }
