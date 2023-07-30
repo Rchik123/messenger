@@ -1,19 +1,27 @@
 package ge.mjavarchik.messenger.viewmodel
 
 import androidx.lifecycle.*
+import ge.mjavarchik.messenger.model.api.User
 import ge.mjavarchik.messenger.model.data.ConversationEntity
 import ge.mjavarchik.messenger.model.data.MessageEntity
+import ge.mjavarchik.messenger.model.mappers.UserMapper
 import ge.mjavarchik.messenger.model.repository.ConversationFirebaseRepository
+import ge.mjavarchik.messenger.model.repository.FirebaseRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatViewModel(
     private val conversationFirebaseRepository: ConversationFirebaseRepository,
+    private val firebaseRepository: FirebaseRepository
 ) : ViewModel() {
+
+    private val userMapper = UserMapper()
 
     private val _conversation = MutableLiveData<ConversationEntity>()
     val conversation: LiveData<ConversationEntity> get() = _conversation
+    private var _receiverUser = MutableLiveData<User>()
+    val receiverUser: LiveData<User> get() = _receiverUser
 
     fun listenToConversation(user1: String, user2: String) {
         conversationFirebaseRepository.listenToConversation(user1, user2)
@@ -30,6 +38,15 @@ class ChatViewModel(
         )
     }
 
+    fun setReceiverUser(username: String){
+        viewModelScope.launch {
+            _receiverUser.postValue(
+                userMapper.fromEntity(
+                    firebaseRepository.getUserByUsername(username)
+                )
+            )
+        }
+    }
 
     companion object {
         fun getViewModelFactory(): ChatViewModelFactory {
@@ -42,7 +59,8 @@ class ChatViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ChatViewModel(
-            ConversationFirebaseRepository()
+            ConversationFirebaseRepository(),
+            FirebaseRepository()
         ) as T
     }
 }

@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
+import ge.mjavarchik.messenger.R
 import ge.mjavarchik.messenger.databinding.ActivityChatBinding
 import ge.mjavarchik.messenger.model.api.Message
 import ge.mjavarchik.messenger.adapters.ChatAdapter
 import ge.mjavarchik.messenger.model.mappers.MessageMapper
 import ge.mjavarchik.messenger.viewmodel.ChatViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
@@ -24,7 +24,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var sender: String
     private lateinit var receiver: String
 
-    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     private val messageMapper = MessageMapper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +37,39 @@ class ChatActivity : AppCompatActivity() {
         setCollapsedToolbarListener()
         setUpSendButtonListener()
         setUpConversationObserver()
+        setUpBackButtonListener()
+        showReceiverUserDetails()
+    }
+
+    private fun showReceiverUserDetails() {
+        viewModel.setReceiverUser(receiver)
+        viewModel.receiverUser.observe(this) {
+            binding.apply {
+                toolbarNickname.text = it.nickname
+                collapsingToolbarNickname.text = it.nickname
+                toolbarProfession.text = it.profession
+                collapsingToolbarProfession.text = it.profession
+                Glide.with(this@ChatActivity)
+                    .load(it.avatar)
+                    .placeholder(R.drawable.avatar_image_placeholder)
+                    .circleCrop()
+                    .into(toolbarPfp)
+                Glide.with(this@ChatActivity)
+                    .load(it.avatar)
+                    .placeholder(R.drawable.avatar_image_placeholder)
+                    .circleCrop()
+                    .into(collapsingToolbarPfp)
+            }
+        }
+    }
+
+    private fun setUpBackButtonListener() {
+        binding.toolbarBack.setOnClickListener {
+            finish()
+        }
+        binding.collapsingToolbarBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setUpConversationObserver() {
