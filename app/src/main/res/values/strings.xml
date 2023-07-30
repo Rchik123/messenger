@@ -14,4 +14,8 @@
     <string name="search">Search button</string>
     <string name="Search_txt">Search</string>
     <string name="hint_et_enter_message">Message</string>
+    <string name="nickname">nickname</string>
+    <string name="profession">profession</string>
+    <string name="nickname2">Nickname</string>
+    <string name="profession2">Profession</string>
 </resources>
