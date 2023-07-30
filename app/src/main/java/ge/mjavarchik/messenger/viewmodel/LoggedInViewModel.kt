@@ -65,7 +65,7 @@ class LoggedInViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return LoggedInViewModel(
-            FirebaseRepository(),
+            FirebaseRepository(context),
             LogInPreferenceRepository(context),
             UserMapper()
         ) as T

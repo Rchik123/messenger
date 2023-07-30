@@ -1,5 +1,6 @@
 package ge.mjavarchik.messenger.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import ge.mjavarchik.messenger.model.api.User
 import ge.mjavarchik.messenger.model.data.ConversationEntity
@@ -49,18 +50,19 @@ class ChatViewModel(
     }
 
     companion object {
-        fun getViewModelFactory(): ChatViewModelFactory {
-            return ChatViewModelFactory()
+        fun getViewModelFactory(context: Context): ChatViewModelFactory {
+            return ChatViewModelFactory(context)
         }
     }
 }
 
 class ChatViewModelFactory(
+    private val context: Context
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ChatViewModel(
-            ConversationFirebaseRepository(),
-            FirebaseRepository()
+            ConversationFirebaseRepository(context),
+            FirebaseRepository(context)
         ) as T
     }
 }

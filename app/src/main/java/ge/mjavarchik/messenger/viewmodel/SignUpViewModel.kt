@@ -1,5 +1,6 @@
 package ge.mjavarchik.messenger.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,14 +31,16 @@ class SignUpViewModel(private val repository: FirebaseRepository) : ViewModel() 
     fun getEnteredUsername(): String = enteredUsername
 
     companion object {
-        fun getViewModelFactory(): SignUpViewModelFactory {
-            return SignUpViewModelFactory()
+        fun getViewModelFactory(context: Context): SignUpViewModelFactory {
+            return SignUpViewModelFactory(context)
         }
     }
 }
 
-class SignUpViewModelFactory : ViewModelProvider.Factory {
+class SignUpViewModelFactory(
+    private val context: Context
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SignUpViewModel(FirebaseRepository()) as T
+        return SignUpViewModel(FirebaseRepository(context)) as T
     }
 }
