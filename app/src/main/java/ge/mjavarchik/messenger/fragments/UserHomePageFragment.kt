@@ -4,25 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import ge.mjavarchik.messenger.adapters.ChatListAdapter
 import ge.mjavarchik.messenger.databinding.AllChatsPageBinding
 import ge.mjavarchik.messenger.model.api.Conversation
-import ge.mjavarchik.messenger.model.api.User
-import ge.mjavarchik.messenger.model.data.UserEntity
-import ge.mjavarchik.messenger.model.repository.LogInPreferenceRepository
 import ge.mjavarchik.messenger.view.activity.ChatActivity
 import ge.mjavarchik.messenger.viewmodel.LoggedInViewModel
 import ge.mjavarchik.messenger.viewmodel.LoggedInViewModelFactory
-import java.util.*
 
 class UserHomePageFragment : Fragment() {
 
@@ -62,7 +56,7 @@ class UserHomePageFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
-        setUpAllUserObserver()
+        setUpAllConversationObserver()
         progressBar.visibility = View.GONE
     }
 
@@ -73,88 +67,42 @@ class UserHomePageFragment : Fragment() {
         if (nick != "") {
             updateInfoNicks(nick)
         } else {
-            setUpAllUserObserver()
+            viewModel.allConversations.value?.let {
+                setConversationAdapter(it)
+            }
         }
     }
 
     private fun updateInfoNicks(nick: String) {
-        viewModel.loggedInUser.observe(this) {
-            if (it != null) {
-                currUserName = it.username
+        val conversations = mutableListOf<Conversation>()
+        viewModel.allConversations.value?.forEach {
+            if (it.user.nickname.contains(nick)) {
+                conversations.add(it)
             }
         }
-        viewModel.allUsers.observe(this) {
-            val conversationList = arrayListOf<Conversation>()
-            for (userEntity in it) {
-                if (userEntity.username != currUserName && userEntity.nickname.contains(nick)) {
-                    conversationList.add(
-                        Conversation(
-                            "id",
-                            Date(),
-                            userEntity.avatar,
-                            "message",
-                            userEntity.username,
-                            userEntity.nickname
-                        )
-                    )
-                }
-            }
-
-            chatRecView.adapter = ChatListAdapter(
-                this,
-                currUserName,
-                conversationList,
-                object : ChatListAdapter.OnItemClickListener {
-                    override fun onItemClick(conversation: Conversation) {
-                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                            putExtra("sender", viewModel.loggedInUser.value?.username)
-                            putExtra("receiver", conversation.from)
-                        }
-                        startActivity(intent)
-                    }
-                }
-            )
-        }
+        setConversationAdapter(conversations)
     }
 
 
-    private fun setUpAllUserObserver() {
-        viewModel.loggedInUser.observe(this) {
-            if (it != null) {
-                currUserName = it.username
-            }
+    private fun setUpAllConversationObserver() {
+        viewModel.allConversations.observe(this) {
+            setConversationAdapter(it)
         }
-        viewModel.allUsers.observe(this) {
-            val conversationList = arrayListOf<Conversation>()
-            for (userEntity in it) {
-                if (userEntity.username != currUserName) {
-                    conversationList.add(
-                        Conversation(
-                            "id",
-                            Date(),
-                            userEntity.avatar,
-                            "message",
-                            userEntity.username,
-                            userEntity.nickname
-                        )
-                    )
-                }
-            }
+    }
 
-            chatRecView.adapter = ChatListAdapter(
-                this,
-                currUserName,
-                conversationList,
-                object : ChatListAdapter.OnItemClickListener {
-                    override fun onItemClick(conversation: Conversation) {
-                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                            putExtra("sender", viewModel.loggedInUser.value?.username)
-                            putExtra("receiver", conversation.from)
-                        }
-                        startActivity(intent)
+    private fun setConversationAdapter(conversations: List<Conversation>) {
+        chatRecView.adapter = ChatListAdapter(
+            this,
+            conversations.sortedByDescending() { conversation -> conversation.lastMessage.date },
+            object : ChatListAdapter.OnItemClickListener {
+                override fun onItemClick(conversation: Conversation) {
+                    val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                        putExtra("sender", viewModel.loggedInUser.value?.username)
+                        putExtra("receiver", conversation.user.username)
                     }
+                    startActivity(intent)
                 }
-            )
-        }
+            }
+        )
     }
 }

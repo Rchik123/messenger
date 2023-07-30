@@ -18,6 +18,11 @@ class ConversationFirebaseRepository(
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance(DATABASE_URL)
 
     val conversationLiveData = MutableLiveData<ConversationEntity>()
+    val allConversationsLiveData = MutableLiveData<List<ConversationEntity>>()
+
+    init {
+        listenToAllConversations()
+    }
 
     fun addMessageToConversation(user1: String, user2: String, newMessage: MessageEntity) {
         val reference = database.getReference("conversations")
@@ -65,6 +70,26 @@ class ConversationFirebaseRepository(
                         }
                     }
                 }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(context, "Error: could not retrieve data", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun listenToAllConversations() {
+        val reference = database.getReference("conversations")
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val allConversations = mutableListOf<ConversationEntity>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val conversation = childSnapshot.getValue(ConversationEntity::class.java)
+                    conversation?.let {
+                        allConversations.add(it)
+                    }
+                }
+                allConversationsLiveData.postValue(allConversations)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

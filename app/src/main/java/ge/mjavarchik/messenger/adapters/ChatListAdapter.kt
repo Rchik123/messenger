@@ -14,7 +14,6 @@ import java.util.*
 
 class ChatListAdapter(
     private var context: UserHomePageFragment,
-    private var userName: String,
     var list: List<Conversation>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
@@ -32,26 +31,23 @@ class ChatListAdapter(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        var friendsAvatarString = list[holder.adapterPosition].friendsAvatar
+        var friendsAvatarString = list[holder.adapterPosition].user.avatar
         if (friendsAvatarString == null || friendsAvatarString == "") {
             holder.profileImage.setImageResource(R.drawable.avatar_image_placeholder)
         } else if (friendsAvatarString != "") {
             Glide.with(context).load(friendsAvatarString).circleCrop().into(holder.profileImage)
         }
-        val date = list[holder.adapterPosition].date
+        val date = list[holder.adapterPosition].lastMessage.date
         var dateStr = ""
         if (date != null) {
             dateStr = convertTime(date)
         }
         holder.time.text = dateStr
-        holder.message.text = list[holder.adapterPosition].messageText
-        holder.nickname.text = list[holder.adapterPosition].to
-        holder.itemView.setOnClickListener {
+        holder.message.text = list[holder.adapterPosition].lastMessage.message
+        holder.itemView.setOnClickListener{
             listener.onItemClick(list[holder.adapterPosition])
         }
-
-
+        holder.nickname.text = list[holder.adapterPosition].user.nickname
     }
 
     private fun convertTime(date: Date): String {
