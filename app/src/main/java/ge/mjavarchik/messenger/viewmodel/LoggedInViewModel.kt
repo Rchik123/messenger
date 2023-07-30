@@ -8,7 +8,9 @@ import ge.mjavarchik.messenger.model.data.UserEntity
 import ge.mjavarchik.messenger.model.mappers.UserMapper
 import ge.mjavarchik.messenger.model.repository.FirebaseRepository
 import ge.mjavarchik.messenger.model.repository.LogInPreferenceRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoggedInViewModel(
     private val firebaseRepository: FirebaseRepository,
@@ -20,13 +22,18 @@ class LoggedInViewModel(
     val loggedInUser: LiveData<User> get() = _loggedInUser
     private val _allUsers = MutableLiveData<List<UserEntity>>()
     val allUsers: LiveData<List<UserEntity>> get() = _allUsers
+    var isLastPage = false
+    var isLoading = false
+    private var currentPage = 1
 
     init {
         viewModelScope.launch {
             _loggedInUser.postValue(getLoggedInUser())
         }
         listenToAllUsers()
+
     }
+
 
     fun updateUserInformation(newNickname: String, newProfession: String, newAvatar: Bitmap?) {
         viewModelScope.launch {
@@ -35,6 +42,11 @@ class LoggedInViewModel(
             }
         }
     }
+
+
+//    fun getUsersByNickname(nickname: String): LiveData<List<UserEntity>> {
+//        return firebaseRepository.getUsersByNickname(nickname)
+//    }
 
     private fun listenToAllUsers() {
         firebaseRepository.usersLiveData.observeForever { users ->
@@ -54,6 +66,7 @@ class LoggedInViewModel(
     }
 
     companion object {
+        private const val PAGE_SIZE = 6
         fun getViewModelFactory(context: Context): LoggedInViewModelFactory {
             return LoggedInViewModelFactory(context)
         }
