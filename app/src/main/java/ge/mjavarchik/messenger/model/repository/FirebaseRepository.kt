@@ -1,8 +1,9 @@
 package ge.mjavarchik.messenger.model.repository
 
 
+import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,7 +16,9 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
-class FirebaseRepository {
+class FirebaseRepository(
+    private val context: Context
+) {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance(DATABASE_URL)
     private val storage: FirebaseStorage = FirebaseStorage.getInstance(STORAGE_URL)
@@ -75,7 +78,7 @@ class FirebaseRepository {
                 userReference.child("nickname").setValue(newNickname)
                 userReference.child("profession").setValue(newProfession)
                 val os = ByteArrayOutputStream()
-                if(newAvatar != null) {
+                if (newAvatar != null) {
 
                     newAvatar.compress(Bitmap.CompressFormat.JPEG, 100, os)
                     val bytearray: ByteArray = os.toByteArray()
@@ -86,7 +89,11 @@ class FirebaseRepository {
                                 userReference.child("avatar").setValue(downloadUri.toString())
                             }
                         }.addOnFailureListener {
-                            Log.d("ERROR", "Image uri not saved")
+                            Toast.makeText(
+                                context,
+                                "Error: image could not be saved",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                 }
             }
@@ -116,7 +123,7 @@ class FirebaseRepository {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("Firebase", "Error fetching users: " + databaseError.toException().toString())
+                Toast.makeText(context, "Error: could not retrieve data", Toast.LENGTH_SHORT).show()
             }
         })
     }
