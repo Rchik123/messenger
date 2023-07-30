@@ -19,13 +19,16 @@ class ChatActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityChatBinding
 
-    private val sender: String = "rezi"
-    private val receiver: String = "mariam"
+    private lateinit var sender: String
+    private lateinit var receiver: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sender = intent.getStringExtra("sender").toString()
+        receiver = intent.getStringExtra("receiver").toString()
 
         setCollapsedToolbarListener()
         setUpSendButtonListener()

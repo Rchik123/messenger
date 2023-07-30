@@ -3,6 +3,7 @@ package ge.mjavarchik.messenger.adapters
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ge.mjavarchik.messenger.R
@@ -15,7 +16,8 @@ import java.util.*
 class ChatListAdapter(
     private var context: UserHomePageFragment,
     private var userName: String,
-    var list: List<Conversation>
+    var list: List<Conversation>,
+    private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
     // create new views
@@ -48,7 +50,9 @@ class ChatListAdapter(
         }
         holder.time.text = dateStr
         holder.message.text = list[holder.adapterPosition].messageText
-
+        holder.itemView.setOnClickListener{
+            listener.onItemClick(list[holder.adapterPosition])
+        }
     }
 
     private fun convertTime(date: Date): String {
@@ -86,4 +90,7 @@ class ChatListAdapter(
         var profileImage = binding.profileImage
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(conversation: Conversation)
+    }
 }
