@@ -38,6 +38,7 @@
                 <ImageView
                     android:id="@+id/backbutton"
                     android:layout_width="@dimen/search_bar_height"
+                    android:onClick="goBack"
                     android:layout_height="@dimen/search_bar_height"
                     android:src="@drawable/ic_back"
                     />
@@ -84,7 +85,6 @@
 
 
         </com.google.android.material.appbar.AppBarLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,7 +94,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/conversations"
+                android:id="@+id/friends"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
