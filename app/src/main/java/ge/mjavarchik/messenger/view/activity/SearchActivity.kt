@@ -24,15 +24,6 @@ import ge.mjavarchik.messenger.viewmodel.LoggedInViewModelFactory
 class SearchActivity : AppCompatActivity() {
     private val list = mutableListOf<User>()
 
-    //    private var adapter = SearchAdapter(list, this, object : SearchAdapter.OnSearchItemClickListener {
-//        override fun onSearchItemClick(user: User) {
-//            val intent = Intent(this, ChatActivity::class.java).apply {
-//                putExtra("sender", viewModel.loggedInUser.value?.username)
-//                putExtra("receiver", conversation.from)
-//            }
-//            startActivity(intent)
-//        }
-//    })
     private val viewModel: LoggedInViewModel by viewModels {
         LoggedInViewModelFactory(this)
     }
