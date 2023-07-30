@@ -31,11 +31,8 @@ class ChatListAdapter(
     }
 
 
-    // binds the list items to a view
-    //listener aqvs dasamatebeli chatze dacherisas rom eg chat gaixsnas
-    //axlandeli user rom aris chartuli eg
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         var friendsAvatarString = list[holder.adapterPosition].friendsAvatar
         if (friendsAvatarString == null || friendsAvatarString == "") {
             holder.profileImage.setImageResource(R.drawable.avatar_image_placeholder)
@@ -49,9 +46,12 @@ class ChatListAdapter(
         }
         holder.time.text = dateStr
         holder.message.text = list[holder.adapterPosition].messageText
-        holder.itemView.setOnClickListener{
+        holder.nickname.text = list[holder.adapterPosition].to
+        holder.itemView.setOnClickListener {
             listener.onItemClick(list[holder.adapterPosition])
         }
+
+
     }
 
     private fun convertTime(date: Date): String {

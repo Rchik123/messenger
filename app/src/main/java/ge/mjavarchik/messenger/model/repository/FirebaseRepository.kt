@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import ge.mjavarchik.messenger.model.api.User
 import ge.mjavarchik.messenger.model.data.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -27,7 +28,9 @@ class FirebaseRepository(
 
     init {
         listenToAllUsers()
+
     }
+
 
     suspend fun addUser(userEntity: UserEntity): Boolean {
         return withContext(Dispatchers.IO) {
@@ -100,6 +103,7 @@ class FirebaseRepository(
         }
     }
 
+
     private fun listenToAllUsers() {
         val reference = database.getReference("users")
         reference.addValueEventListener(object : ValueEventListener {
@@ -127,7 +131,24 @@ class FirebaseRepository(
             }
         })
     }
+//    private fun getUserByNickname(nick: String) {
+//        val reference = database.getReference("users")
+//        reference.orderByChild("nickname").startAt(nick).endAt(nick + "\uf8ff")
+//            .get().addOnSuccessListener {
+//                getUsersBy(it)
+//            }.addOnFailureListener {
+//                Toast.makeText(context, "Error: could not retrieve data", Toast.LENGTH_SHORT).show()
+//            }
+//    }
 
+//    private fun getUsersBy(dataSnapshot: DataSnapshot){
+//        var list = mutableListOf<UserEntity>()
+//        for(child in dataSnapshot.children){
+//            var us: UserEntity = child.getValue(UserEntity::class.java) as UserEntity
+//            list.add(us)
+//        }
+//        searchResults.postValue(list)
+//    }
     companion object {
         private const val DATABASE_URL =
             "https://messenger-53d40-default-rtdb.europe-west1.firebasedatabase.app"
