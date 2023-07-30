@@ -30,10 +30,6 @@ class ChatListAdapter(
     }
 
 
-    // binds the list items to a view
-    //listener aqvs dasamatebeli chatze dacherisas rom eg chat gaixsnas
-    //axlandeli user rom aris chartuli eg
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var friendsAvatarString = list[holder.adapterPosition].user.avatar
         if (friendsAvatarString == null || friendsAvatarString == "") {
