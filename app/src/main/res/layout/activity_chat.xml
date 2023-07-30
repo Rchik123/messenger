@@ -23,7 +23,7 @@
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_chat_collapsing_toolbar"
-                android:background="@color/blue"
+                android:background="@color/facebook_blue"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
